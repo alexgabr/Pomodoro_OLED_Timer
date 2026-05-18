@@ -1,4 +1,4 @@
-#include <Button.h>
+#include "Button.h"
 
 Button::Button(u8g2_t *display, uint8_t width, uint8_t height)
 {
@@ -11,9 +11,9 @@ void Button::init(uint8_t x_text, uint8_t y_text, const char *text, bool is_inve
 {
     // TODO: sa fac o functie prin care sa se poata seta nr de pixeli pentru auto-padding manual
     if(bttn_size.width < u8g2_GetStrWidth(display, text))
-        bttn_size.width = u8g2_GetStrWidth(display, text) + 2; //one pixel for each side (or other multiple of 2)
+        bttn_size.width = u8g2_GetStrWidth(display, text) + 4; //two pixels for each side (or other multiple of 2)
     if(bttn_size.height < u8g2_GetAscent(display))
-        bttn_size.height = u8g2_GetAscent(display) + 2; //same
+        bttn_size.height = u8g2_GetAscent(display) + 4; //same
 
     uint8_t x_frame = x_text - (bttn_size.width - u8g2_GetStrWidth(display, text)) / 2;
     uint8_t y_frame = y_text - (bttn_size.height + u8g2_GetAscent(display)) / 2;
