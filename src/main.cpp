@@ -5,7 +5,7 @@
 
 //declaring the oled display in landscape mode
 U8G2_SSD1309_128X64_NONAME0_1_HW_I2C u8g2(U8G2_R0);
-Button btt(u8g2.getU8g2(), 50, 40);
+Button btt(u8g2.getU8g2(), 50, 30);
 
 void setup() {
     Serial.begin(115200);
@@ -30,9 +30,11 @@ void loop() {
     do {
         u8g2.setCursor(x_title, y_title);
         u8g2.print(F("Timer"));
+        
+        btt.init(55, 35, "Buton", 1);
     } while(u8g2.nextPage());
 
-    btt.init(60, 35, "Buton");
+    
 
-    delay(10000);
+    for(;;);
 }

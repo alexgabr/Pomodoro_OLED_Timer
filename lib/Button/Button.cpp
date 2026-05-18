@@ -16,14 +16,26 @@ void Button::init(uint8_t x_text, uint8_t y_text, const char *text, bool is_inve
     // TODO: daca marimea butonului este mai mica decat cea a textului, butonul va avea marimea textului
     uint8_t x_frame = x_text - (bttn_size.width - u8g2_GetStrWidth(display, text)) / 2;
     uint8_t y_frame = y_text - (bttn_size.height + u8g2_GetAscent(display)) / 2;
-    u8g2_SetDrawColor(display, 1);
 
-    u8g2_FirstPage(display);
-    do
-    {
-        u8g2_DrawFrame(display, x_frame, y_frame, bttn_size.width, bttn_size.height);
+    if(is_inverted){
+        u8g2_SetDrawColor(display, 1);
+        u8g2_DrawBox(display, x_frame, y_frame, bttn_size.width, bttn_size.height);
+
+        u8g2_SetDrawColor(display, 0);
+        u8g2_SetFontMode(display, 1);
+
         u8g2_DrawStr(display, x_text, y_text, text);
-    } while (u8g2_NextPage(display));
+    }
+    else{
+        u8g2_SetDrawColor(display, 1);
+        u8g2_DrawFrame(display, x_frame, y_frame, bttn_size.width, bttn_size.height);
+
+        u8g2_DrawStr(display, x_text, y_text, text);        
+    }
+    
+    //back to default
+    u8g2_SetDrawColor(display, 1);
+    u8g2_SetFontMode(display, 0);
 }
 
 // setters and getters
