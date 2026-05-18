@@ -1,9 +1,5 @@
 #include <Button.h>
 
-// #include <Arduino.h>
-// #include <U8g2lib.h>
-
-// constructors
 Button::Button(u8g2_t *display, uint8_t width, uint8_t height)
 {
     bttn_size.width = width;
@@ -13,7 +9,12 @@ Button::Button(u8g2_t *display, uint8_t width, uint8_t height)
 
 void Button::init(uint8_t x_text, uint8_t y_text, const char *text, bool is_inverted)
 {
-    // TODO: daca marimea butonului este mai mica decat cea a textului, butonul va avea marimea textului
+    // TODO: sa fac o functie prin care sa se poata seta nr de pixeli pentru auto-padding manual
+    if(bttn_size.width < u8g2_GetStrWidth(display, text))
+        bttn_size.width = u8g2_GetStrWidth(display, text) + 2; //one pixel for each side (or other multiple of 2)
+    if(bttn_size.height < u8g2_GetAscent(display))
+        bttn_size.height = u8g2_GetAscent(display) + 2; //same
+
     uint8_t x_frame = x_text - (bttn_size.width - u8g2_GetStrWidth(display, text)) / 2;
     uint8_t y_frame = y_text - (bttn_size.height + u8g2_GetAscent(display)) / 2;
 
@@ -38,7 +39,7 @@ void Button::init(uint8_t x_text, uint8_t y_text, const char *text, bool is_inve
     u8g2_SetFontMode(display, 0);
 }
 
-// setters and getters
+
 void Button::setSize(uint8_t width, uint8_t height)
 {
     bttn_size.width = width;
