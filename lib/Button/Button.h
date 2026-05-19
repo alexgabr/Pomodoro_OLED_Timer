@@ -11,7 +11,8 @@ class Button{
             uint8_t width, height;
         } bttn_size;
     public:
-        //constructor
+        //constructors
+        Button();
         Button(u8g2_t *display, uint8_t width = 0, uint8_t height = 0);
 
         //functions

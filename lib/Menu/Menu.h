@@ -10,7 +10,7 @@ class Menu: public Page{
             char *bttn_name;
         } button[32];
     public:
-        Menu(u8g2_t *display, char *title = "", Button list_bttns[], char *bttn_names[], uint8_t nrButtons);
+        Menu(u8g2_t *display, char *title = (char*)(""), Button list_bttns[], char *bttn_names[], uint8_t nrButtons);
 
         void drawMenu(); //todo: parameters
         void addButton(char *name, Button button);

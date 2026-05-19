@@ -11,7 +11,7 @@ class Page
         char *title;
         u8g2_t *display;
     public:
-        Page(u8g2_t *display, char *title = ""); // Constructor
+        Page(u8g2_t *display, char *title = (char*)("")); // Constructor
 
         void setTitle(char *title); // Set page title
         char *getTitle(); // Get page title

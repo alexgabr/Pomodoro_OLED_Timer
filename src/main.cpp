@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
-#include "Button.h"
+#include "Page.h"
 
 #define INACTIVITY 30000 // 30 seconds
 const char *title = "Pomodoro";

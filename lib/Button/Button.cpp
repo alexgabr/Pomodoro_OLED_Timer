@@ -1,5 +1,12 @@
 #include "Button.h"
 
+Button::Button()
+{
+    bttn_size.width = 0;
+    bttn_size.height = 0;
+    this->display = nullptr;
+}
+
 Button::Button(u8g2_t *display, uint8_t width, uint8_t height)
 {
     bttn_size.width = width;
