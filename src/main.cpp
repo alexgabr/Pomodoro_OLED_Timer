@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
-#include "Page.h"
+#include "Menu.h"
 
 #define INACTIVITY 30000 // 30 seconds
 const char *title = "Pomodoro";
@@ -18,6 +18,9 @@ Button menu[3] = {
 };
 
 const char *button_name[3] = {"Timer", "StopWatch", "Settings"};
+uint8_t coords[3][2] = {{32, 15}, {32, 35}, {32, 55}};
+
+Menu m(u8g2.getU8g2(), "Meniu", menu, button_name, coords, 3);
 
 uint8_t bttn_selected = 0;
 uint32_t last_press = 0;
@@ -44,10 +47,11 @@ void loop() {
 
     if(millis() - last_press >= INACTIVITY)
         u8g2.setPowerSave(1);
-    else{
+    else {
         u8g2.setPowerSave(0);
 
         //displaying the content
+        /*
         u8g2.firstPage();
         do {
             uint8_t x_title = (u8g2.getDisplayWidth() - u8g2.getStrWidth(title)) / 2;
@@ -62,6 +66,13 @@ void loop() {
                menu[i].init(32, y_bttn, button_name[i], i == bttn_selected % 3);
            }
         } while(u8g2.nextPage());
+        */
+
+        u8g2.firstPage();
+        do {
+            m.drawMenu();
+        } while(u8g2.nextPage());
+        
     }
 
     delay(100);

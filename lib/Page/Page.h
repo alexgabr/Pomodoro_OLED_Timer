@@ -8,11 +8,12 @@
 class Page
 {
     protected:
-        char *title;
+        const char *title;
         u8g2_t *display;
+        void displayPageTitle(); //todo: implement it
     public:
-        Page(u8g2_t *display, char *title = (char*)("")); // Constructor
+        Page(u8g2_t *display, const char *title = ""); // Constructor
 
-        void setTitle(char *title); // Set page title
-        char *getTitle(); // Get page title
+        void setTitle(const char *title); // Set page title
+        const char *getTitle(); // Get page title
 };

@@ -1,17 +1,17 @@
 #include "Page.h"
 
-Page::Page(u8g2_t *display, char *title)
+Page::Page(u8g2_t *display, const char *title)
 {
     this->display = display;
     this->title = title;
 }
 
-void Page::setTitle(char *title)
+void Page::setTitle(const char *title)
 {
     this->title = title;
 }
 
-char* Page::getTitle()
+const char* Page::getTitle()
 {
     return title;
 }
