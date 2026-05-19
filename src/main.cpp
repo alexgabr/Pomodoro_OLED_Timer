@@ -3,7 +3,8 @@
 
 #include "Button.h"
 
-#define INACTIVITY 30000 //30 seconds
+#define INACTIVITY 30000 // 30 seconds
+const char *title = "Pomodoro";
 
 //declaring the oled display in landscape mode
 U8G2_SSD1309_128X64_NONAME0_1_HW_I2C u8g2(U8G2_R0);
@@ -36,10 +37,6 @@ void setup() {
 }
 
 void loop() {
-    const char *title = "Pomodoro";
-    uint8_t x_title = (u8g2.getDisplayWidth() - u8g2.getStrWidth(title)) / 2;
-    uint8_t y_title = u8g2.getAscent() + 3;
-
     bool pressed = digitalRead(17);
     if(pressed)
         bttn_selected++,
@@ -53,6 +50,9 @@ void loop() {
         //displaying the content
         u8g2.firstPage();
         do {
+            uint8_t x_title = (u8g2.getDisplayWidth() - u8g2.getStrWidth(title)) / 2;
+            uint8_t y_title = u8g2.getAscent() + 3;
+
             u8g2.setCursor(x_title, y_title);
             u8g2.print(title);
         
