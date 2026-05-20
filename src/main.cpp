@@ -18,7 +18,7 @@ Button menu[3] = {
 };
 
 const char *button_name[3] = {"Timer", "StopWatch", "Settings"};
-uint8_t coords[3][2] = {{32, 15}, {32, 35}, {32, 55}};
+uint8_t coords[3][2] = {{32, 30}, {32, 45}, {32, 60}};
 
 Menu m(u8g2.getU8g2(), "Meniu", menu, button_name, coords, 3);
 

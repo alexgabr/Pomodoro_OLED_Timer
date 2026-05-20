@@ -13,7 +13,7 @@ class Menu: public Page{
     public:
         Menu(u8g2_t *display, const char *title, Button list_bttns[32], const char *bttn_names[32], uint8_t coords[][2], uint8_t nrButtons);
 
-        void drawMenu();
+        void drawMenu(bool title_is_centered = false);
         bool addButton(const char *name, Button button); // return 1 - successful; return 0 - error
 
         //TODO: setters for coords, name
