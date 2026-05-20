@@ -10,7 +10,7 @@ class Page
     protected:
         const char *title;
         u8g2_t *display;
-        void displayPageTitle(bool centered = false); //todo: implement it
+        void displayPageTitle(bool centered = false);
     public:
         Page(u8g2_t *display, const char *title = ""); // Constructor
 

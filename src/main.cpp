@@ -4,6 +4,7 @@
 #include "Menu.h"
 
 #define INACTIVITY 30000 // 30 seconds
+#define BUTTON_DEBOUNCE 50 // ms
 const char *title = "Pomodoro";
 
 //declaring the oled display in landscape mode
@@ -22,8 +23,10 @@ uint8_t coords[3][2] = {{32, 30}, {32, 45}, {32, 60}};
 
 Menu m(u8g2.getU8g2(), "Meniu", menu, button_name, coords, 3);
 
-uint8_t bttn_selected = 0;
 uint32_t last_press = 0;
+
+bool last_button_state = 0;
+uint32_t last_debounce_time = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -40,10 +43,16 @@ void setup() {
 }
 
 void loop() {
-    bool pressed = digitalRead(17);
-    if(pressed)
-        bttn_selected++,
-        last_press = millis();
+    bool button_state = digitalRead(17);
+    if(button_state != last_button_state) {
+        if(button_state && millis() - last_debounce_time >= BUTTON_DEBOUNCE) {
+            m.nextSelect();
+
+            last_debounce_time = last_press = millis();
+        }
+
+        last_button_state = button_state;
+    }
 
     if(millis() - last_press >= INACTIVITY)
         u8g2.setPowerSave(1);
@@ -72,8 +81,5 @@ void loop() {
         do {
             m.drawMenu();
         } while(u8g2.nextPage());
-        
     }
-
-    delay(100);
 }
