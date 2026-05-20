@@ -16,7 +16,7 @@ class Menu: public Page{
         Menu(u8g2_t *display, const char *title, Button list_bttns[32], const char *bttn_names[32], uint8_t coords[32][2], uint8_t nrButtons);
 
         void nextSelect();
-        void drawMenu(bool title_is_centered = false);
+        void drawMenu(const uint8_t *title_font, const uint8_t *content_font, bool title_is_centered = false);
         bool addButton(Button button, const char *name, uint8_t x_text, uint8_t y_text); // return 1 - successful; return 0 - error
 
         //TODO: setters for coords, name

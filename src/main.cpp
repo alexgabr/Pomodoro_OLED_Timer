@@ -3,8 +3,8 @@
 
 #include "Menu.h"
 
-#define INACTIVITY 30000 // 30 seconds
-#define BUTTON_DEBOUNCE 50 // ms
+#include "defines.h"
+
 const char *title = "Pomodoro";
 
 //declaring the oled display in landscape mode
@@ -19,7 +19,7 @@ Button menu[3] = {
 };
 
 const char *button_name[3] = {"Timer", "StopWatch", "Settings"};
-uint8_t coords[3][2] = {{32, 30}, {32, 45}, {32, 60}};
+uint8_t coords[3][2] = {{35, 30}, {35, 45}, {35, 60}};
 
 Menu m(u8g2.getU8g2(), "Meniu", menu, button_name, coords, 3);
 
@@ -39,11 +39,11 @@ void setup() {
     u8g2.setContrast(64); //25% brightness
     u8g2.setFont(u8g2_font_ncenB08_tr);
 
-    pinMode(17, INPUT_PULLDOWN);
+    pinMode(selectPin, INPUT_PULLDOWN);
 }
 
 void loop() {
-    bool button_state = digitalRead(17);
+    bool button_state = digitalRead(selectPin);
     if(button_state != last_button_state) {
         if(button_state && millis() - last_debounce_time >= BUTTON_DEBOUNCE) {
             m.nextSelect();
@@ -62,7 +62,7 @@ void loop() {
         //displaying the content
         u8g2.firstPage();
         do {
-            m.drawMenu();
+            m.drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
         } while(u8g2.nextPage());
     }
 }

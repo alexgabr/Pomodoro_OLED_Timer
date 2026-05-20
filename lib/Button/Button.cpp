@@ -20,7 +20,7 @@ void Button::init(uint8_t x_text, uint8_t y_text, const char *text, bool is_inve
     if(bttn_size.width < u8g2_GetStrWidth(display, text))
         bttn_size.width = u8g2_GetStrWidth(display, text) + 4; //two pixels for each side (or other multiple of 2)
     if(bttn_size.height < u8g2_GetAscent(display))
-        bttn_size.height = u8g2_GetAscent(display) + 4; //same
+        bttn_size.height = u8g2_GetAscent(display) - u8g2_GetDescent(display) + 4; //same
 
     uint8_t x_frame = x_text - (bttn_size.width - u8g2_GetStrWidth(display, text)) / 2;
     uint8_t y_frame = y_text - (bttn_size.height + u8g2_GetAscent(display)) / 2;
