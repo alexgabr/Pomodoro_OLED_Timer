@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
-#include "Button.h"
+#include "Menu.h"
 
-#define INACTIVITY 30000 //30 seconds
+#define INACTIVITY 30000 // 30 seconds
+#define BUTTON_DEBOUNCE 50 // ms
+const char *title = "Pomodoro";
 
 //declaring the oled display in landscape mode
 U8G2_SSD1309_128X64_NONAME0_1_HW_I2C u8g2(U8G2_R0);
@@ -17,9 +19,14 @@ Button menu[3] = {
 };
 
 const char *button_name[3] = {"Timer", "StopWatch", "Settings"};
+uint8_t coords[3][2] = {{32, 30}, {32, 45}, {32, 60}};
 
-uint8_t bttn_selected = 0;
+Menu m(u8g2.getU8g2(), "Meniu", menu, button_name, coords, 3);
+
 uint32_t last_press = 0;
+
+bool last_button_state = 0;
+uint32_t last_debounce_time = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -36,33 +43,26 @@ void setup() {
 }
 
 void loop() {
-    const char *title = "Pomodoro";
-    uint8_t x_title = (u8g2.getDisplayWidth() - u8g2.getStrWidth(title)) / 2;
-    uint8_t y_title = u8g2.getAscent() + 3;
+    bool button_state = digitalRead(17);
+    if(button_state != last_button_state) {
+        if(button_state && millis() - last_debounce_time >= BUTTON_DEBOUNCE) {
+            m.nextSelect();
 
-    bool pressed = digitalRead(17);
-    if(pressed)
-        bttn_selected++,
-        last_press = millis();
+            last_debounce_time = last_press = millis();
+        }
+
+        last_button_state = button_state;
+    }
 
     if(millis() - last_press >= INACTIVITY)
         u8g2.setPowerSave(1);
-    else{
+    else {
         u8g2.setPowerSave(0);
 
         //displaying the content
         u8g2.firstPage();
         do {
-            u8g2.setCursor(x_title, y_title);
-            u8g2.print(title);
-        
-           //btt.init(55, 35, "Button", pressed);
-           for(int i = 0; i < 3; i++){
-               uint8_t y_bttn = 32 + i * 13;
-               menu[i].init(32, y_bttn, button_name[i], i == bttn_selected % 3);
-           }
+            m.drawMenu();
         } while(u8g2.nextPage());
     }
-
-    delay(100);
 }
