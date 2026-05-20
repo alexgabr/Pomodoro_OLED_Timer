@@ -17,7 +17,7 @@ class Menu: public Page{
 
         void nextSelect();
         void drawMenu(bool title_is_centered = false);
-        bool addButton(const char *name, Button button); // return 1 - successful; return 0 - error
+        bool addButton(Button button, const char *name, uint8_t x_text, uint8_t y_text); // return 1 - successful; return 0 - error
 
         //TODO: setters for coords, name
         //TODO: bool deleteButton();

@@ -26,3 +26,18 @@ void Menu::nextSelect()
 {
     select++;
 }
+
+bool Menu::addButton(Button button, const char *name, uint8_t x_text, uint8_t y_text)
+{
+    if(nrButtons >= 31) // max is 32 buttons; first index is 0
+        return 0;
+
+    nrButtons++;
+
+    this->button[nrButtons].bttn = button;
+    this->button[nrButtons].bttn_name = name;
+    this->button[nrButtons].x = x_text;
+    this->button[nrButtons].y = y_text;
+
+    return 1;
+}

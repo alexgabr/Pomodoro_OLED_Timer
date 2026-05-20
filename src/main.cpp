@@ -60,23 +60,6 @@ void loop() {
         u8g2.setPowerSave(0);
 
         //displaying the content
-        /*
-        u8g2.firstPage();
-        do {
-            uint8_t x_title = (u8g2.getDisplayWidth() - u8g2.getStrWidth(title)) / 2;
-            uint8_t y_title = u8g2.getAscent() + 3;
-
-            u8g2.setCursor(x_title, y_title);
-            u8g2.print(title);
-        
-           //btt.init(55, 35, "Button", pressed);
-           for(int i = 0; i < 3; i++){
-               uint8_t y_bttn = 32 + i * 13;
-               menu[i].init(32, y_bttn, button_name[i], i == bttn_selected % 3);
-           }
-        } while(u8g2.nextPage());
-        */
-
         u8g2.firstPage();
         do {
             m.drawMenu();
