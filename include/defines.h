@@ -5,4 +5,4 @@
 #define INACTIVITY 30000 // 30 seconds
 #define BUTTON_DEBOUNCE 50 // ms
 
-const uint8_t selectPin = 17;
+const uint8_t selectButton = 16, upButton = 17, downButton = 18;
