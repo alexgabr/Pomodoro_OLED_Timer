@@ -1,6 +1,8 @@
 #include <Gui.h>
 
-Gui::Gui(U8G2 &display, Menu &menu, uint8_t up, uint8_t down, uint8_t select) : display(display), menu(menu)
+#include "pages.h"
+
+Gui::Gui(U8G2 &display, Menu *mainMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), mainMenu(mainMenu), currentMenu(mainMenu)
 {
     pinUp = up;
     pinDown = down;
@@ -19,7 +21,7 @@ void Gui::handleInput()
 
     if(currentUp != lastUpDetection) {
         if(currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE) {
-            menu.prevSelect();
+            currentMenu->prevSelect();
 
             lastActivity = lastDebounceUp = now;
         }
@@ -29,7 +31,7 @@ void Gui::handleInput()
 
     if(currentDown != lastDownDetection) {
         if(currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE) {
-            menu.nextSelect();
+            currentMenu->nextSelect();
 
             lastActivity = lastDebounceDown = now;
         }
@@ -39,7 +41,9 @@ void Gui::handleInput()
 
     if(currentSelect != lastSelectDetection) {
         if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE) {
-            currentOption = menu.getSelect();
+            if(currentMenu == mainMenu)
+                currentOption = currentMenu->getSelect();
+            // else TODO: optiune selectată în submeniu
 
             lastActivity = lastDebounceSelect = now;
         }
@@ -55,23 +59,23 @@ void Gui::render()
     else {
         display.setPowerSave(false);
 
-        switch(currentOption)
-            {
-                case 0:
-                    displayTimer(display);
-                    break;
-                case 1:
-                    displayStopWatch(display);
-                    break;
-                case 2:
-                    displaySettings(display);
-                    break;
-                default:
-                     display.firstPage();
-                     do {
-                        menu.drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
-                    } while(display.nextPage());
-            }
+        switch(currentOption){
+            case 0:
+                displayTimer(display, *this);
+                break;
+            case 1:
+                displayStopWatch(display, *this);
+                break;
+            case 2:
+                displaySettings(display, *this);
+                break;
+            default:
+                display.firstPage();
+                do {
+                    mainMenu->drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
+                } while(display.nextPage());
+                break;
+        }
     }
 }
 
@@ -90,4 +94,14 @@ void Gui::update()
 {
     handleInput();
     render();
+}
+
+void Gui::changeMenu(Menu *newMenu)
+{
+    currentMenu = newMenu;
+}
+
+Menu *Gui::getMenu()
+{
+    return currentMenu;
 }

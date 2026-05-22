@@ -7,12 +7,11 @@
 #include "Menu.h"
 #include "defines.h"
 
-#include "pages.h"
-
 class Gui {
     private:
         U8G2 &display;
-        Menu &menu;
+        Menu *mainMenu;
+        Menu *currentMenu;
 
         uint8_t pinUp;
         uint8_t pinDown;
@@ -33,8 +32,11 @@ class Gui {
         void handleInput(); // handling user's input
         void render(); // rendering the content on display
     public:
-        Gui(U8G2 &display, Menu &menu, uint8_t up, uint8_t down, uint8_t select); // constructor
+        Gui(U8G2 &display, Menu *mainMenu, uint8_t up, uint8_t down, uint8_t select); // constructor
 
         void init(); // initialize gui once
         void update(); // loop update of the gui
+
+        void changeMenu(Menu *newMenu); // change the current menu to a new one
+        Menu *getMenu();
 };

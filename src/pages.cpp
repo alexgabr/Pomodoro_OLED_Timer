@@ -2,18 +2,13 @@
 
 #include "Button.h"
 #include "Menu.h"
+#include "Gui.h"
 
-void displayTimer(U8G2 &display) {
-    const char *button_name[3] = {"Back", "Start", "Reset"}; 
-    uint8_t coords[3][2] = {{10, 20}, {30, 60}, {80, 60}};
+extern Menu timerMenu;
 
-    Button timerButtons[3] = {
-        Button(display.getU8g2()),
-        Button(display.getU8g2()),
-        Button(display.getU8g2())
-    };
-
-    Menu timerMenu(display.getU8g2(), "Timer", timerButtons, button_name, coords, 3);
+void displayTimer(U8G2 &display, Gui &gui) {
+    if(gui.getMenu() != &timerMenu)
+        gui.changeMenu(&timerMenu);
 
     display.firstPage();
     do {
@@ -23,10 +18,10 @@ void displayTimer(U8G2 &display) {
     } while(display.nextPage());
 }
 
-void displayStopWatch(U8G2 &display) {
+void displayStopWatch(U8G2 &display, Gui &gui) {
     // Implementare stopwatch
 }
 
-void displaySettings(U8G2 &display) {
+void displaySettings(U8G2 &display, Gui &gui) {
     // Implementare setări
 }
