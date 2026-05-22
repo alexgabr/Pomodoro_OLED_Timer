@@ -7,6 +7,8 @@
 #include "Menu.h"
 #include "defines.h"
 
+#include "pages.h"
+
 class Gui {
     private:
         U8G2 &display;
@@ -15,6 +17,13 @@ class Gui {
         uint8_t pinUp;
         uint8_t pinDown;
         uint8_t pinSelect;
+
+        enum Option {
+            TIMER,
+            STOPWATCH,
+            SETTINGS,
+            BACK
+        } currentOption;
 
         bool lastUpDetection = 0;
         bool lastDownDetection = 0;

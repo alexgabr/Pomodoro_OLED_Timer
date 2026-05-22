@@ -37,6 +37,11 @@ void Menu::prevSelect()
         select--;
 }
 
+uint8_t Menu::getSelect()
+{
+    return select % nrButtons;
+}
+
 bool Menu::addButton(Button button, const char *name, uint8_t x_text, uint8_t y_text)
 {
     if(nrButtons >= 31) // max is 32 buttons; first index is 0

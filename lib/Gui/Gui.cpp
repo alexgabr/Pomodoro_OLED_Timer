@@ -39,7 +39,18 @@ void Gui::handleInput()
 
     if(currentSelect != lastSelectDetection) {
         if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE) {
-            //TODO: de adaugat accesarea paginii selectate
+            switch(menu.getSelect())
+            {
+                case 0:
+                    displayTimer(display);
+                    break;
+                case 1:
+                    displayStopWatch(display);
+                    break;
+                case 2:
+                    displaySettings(display);
+                    break;
+            }
 
             lastActivity = lastDebounceSelect = now;
         }
