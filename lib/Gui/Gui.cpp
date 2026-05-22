@@ -39,18 +39,7 @@ void Gui::handleInput()
 
     if(currentSelect != lastSelectDetection) {
         if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE) {
-            switch(menu.getSelect())
-            {
-                case 0:
-                    displayTimer(display);
-                    break;
-                case 1:
-                    displayStopWatch(display);
-                    break;
-                case 2:
-                    displaySettings(display);
-                    break;
-            }
+            currentOption = menu.getSelect();
 
             lastActivity = lastDebounceSelect = now;
         }
@@ -66,10 +55,23 @@ void Gui::render()
     else {
         display.setPowerSave(false);
 
-        display.firstPage();
-        do {
-            menu.drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
-        } while(display.nextPage());
+        switch(currentOption)
+            {
+                case 0:
+                    displayTimer(display);
+                    break;
+                case 1:
+                    displayStopWatch(display);
+                    break;
+                case 2:
+                    displaySettings(display);
+                    break;
+                default:
+                     display.firstPage();
+                     do {
+                        menu.drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
+                    } while(display.nextPage());
+            }
     }
 }
 

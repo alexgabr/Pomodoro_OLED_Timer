@@ -18,12 +18,7 @@ class Gui {
         uint8_t pinDown;
         uint8_t pinSelect;
 
-        enum Option {
-            TIMER,
-            STOPWATCH,
-            SETTINGS,
-            BACK
-        } currentOption;
+        uint8_t currentOption = 3; // default value is 3, which means that no option is selected
 
         bool lastUpDetection = 0;
         bool lastDownDetection = 0;
