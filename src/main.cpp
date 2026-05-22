@@ -32,7 +32,6 @@ void setup() {
     //OLED Display initialization
     u8g2.begin();
     u8g2.setContrast(64); //25% brightness
-    u8g2.setFont(u8g2_font_ncenB08_tr);
 
     gui.init();
 }
