@@ -1,4 +1,5 @@
-#include <Gui.h>
+#include "Gui.h"
+#include "Timerlib.h"
 
 #include "pages.h"
 
@@ -6,6 +7,8 @@ extern Menu timerMenu;
 extern Menu mainMenu;
 // extern Menu stopWatchMenu;
 // extern Menu settingsMenu;
+
+extern Timer pomodoroTimer;
 
 Gui::Gui(U8G2 &display, Menu *homeMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), homeMenu(homeMenu), currentMenu(homeMenu)
 {
@@ -69,10 +72,13 @@ void Gui::handleInput()
                         changeMenu(&mainMenu); // BACK
                         break;
                     case 1:
-                        // start timer
+                        if(pomodoroTimer.isRunning())
+                            pomodoroTimer.stop();
+                        else
+                            pomodoroTimer.start();
                         break;
                     case 2:
-                        // reset timer
+                        pomodoroTimer.reset();
                         break;
                     default:
                         break;

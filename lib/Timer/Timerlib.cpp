@@ -44,6 +44,11 @@ uint32_t Timer::getRemainingTime()
     return duration - elapsed;
 }
 
+bool Timer::isRunning()
+{
+    return running;
+}
+
 void Timer::getFormattedTime(uint8_t &minutes, uint8_t &seconds)
 {
     uint32_t remainingSec = getRemainingTime() / 1000;
