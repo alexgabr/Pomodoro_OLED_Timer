@@ -1,15 +1,11 @@
 #include "pages.h"
 
-#include "Button.h"
-#include "Menu.h"
-#include "Gui.h"
-
 extern Menu timerMenu;
+extern Menu mainMenu;
+// extern Menu stopWatchMenu;
+// extern Menu settingsMenu;
 
 void displayTimer(U8G2 &display, Gui &gui) {
-    if(gui.getMenu() != &timerMenu)
-        gui.changeMenu(&timerMenu);
-
     display.firstPage();
     do {
         timerMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);

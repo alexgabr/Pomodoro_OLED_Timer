@@ -2,7 +2,12 @@
 
 #include "pages.h"
 
-Gui::Gui(U8G2 &display, Menu *mainMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), mainMenu(mainMenu), currentMenu(mainMenu)
+extern Menu timerMenu;
+extern Menu mainMenu;
+// extern Menu stopWatchMenu;
+// extern Menu settingsMenu;
+
+Gui::Gui(U8G2 &display, Menu *homeMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), homeMenu(homeMenu), currentMenu(homeMenu)
 {
     pinUp = up;
     pinDown = down;
@@ -41,13 +46,43 @@ void Gui::handleInput()
 
     if(currentSelect != lastSelectDetection) {
         if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE) {
-            if(currentMenu == mainMenu)
-                currentOption = currentMenu->getSelect();
-            // else TODO: optiune selectată în submeniu
+            uint8_t option = currentMenu->getSelect();
+
+            if(currentMenu == &mainMenu) {
+                switch(option) {
+                    case 0:
+                        changeMenu(&timerMenu); // BACK
+                        break;
+                    case 1:
+                        //changeMenu(&stopWatchMenu);
+                        break;
+                    case 2:
+                       // changeMenu(&settingsMenu);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if(currentMenu == &timerMenu) {
+                switch(option) {
+                    case 0:
+                        changeMenu(&mainMenu); // BACK
+                        break;
+                    case 1:
+                        // start timer
+                        break;
+                    case 2:
+                        // reset timer
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // else if(currentMenu == &stopWatchMenu) {}
+            // else if(currentMenu == &settingsMenu) {}
 
             lastActivity = lastDebounceSelect = now;
         }
-
         lastSelectDetection = currentSelect;
     }
 }
@@ -59,23 +94,15 @@ void Gui::render()
     else {
         display.setPowerSave(false);
 
-        switch(currentOption){
-            case 0:
+        display.firstPage();
+        do {
+            if(currentMenu == &mainMenu)
+                mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+            else if(currentMenu == &timerMenu)
                 displayTimer(display, *this);
-                break;
-            case 1:
-                displayStopWatch(display, *this);
-                break;
-            case 2:
-                displaySettings(display, *this);
-                break;
-            default:
-                display.firstPage();
-                do {
-                    mainMenu->drawMenu(u8g2_font_ncenB08_tr, u8g2_font_5x8_tf, 1);
-                } while(display.nextPage());
-                break;
-        }
+            //else if(currentMenu == &stopWatchMenu)
+            //else if(currentMenu == &settingsMenu)
+        } while(display.nextPage());
     }
 }
 
