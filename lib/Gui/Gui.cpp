@@ -2,11 +2,12 @@
 #include "Timerlib.h"
 
 #include "pages.h"
+#include "defines.h"
 
 extern Menu timerMenu;
 extern Menu mainMenu;
-// extern Menu stopWatchMenu;
-// extern Menu settingsMenu;
+extern Menu stopWatchMenu;
+extern Menu settingsMenu;
 
 extern Timer pomodoroTimer;
 
@@ -57,10 +58,10 @@ void Gui::handleInput()
                         changeMenu(&timerMenu); // BACK
                         break;
                     case 1:
-                        //changeMenu(&stopWatchMenu);
+                        changeMenu(&stopWatchMenu);
                         break;
                     case 2:
-                       // changeMenu(&settingsMenu);
+                        changeMenu(&settingsMenu);
                         break;
                     default:
                         break;
@@ -84,8 +85,8 @@ void Gui::handleInput()
                         break;
                 }
             }
-            // else if(currentMenu == &stopWatchMenu) {}
-            // else if(currentMenu == &settingsMenu) {}
+            else if(currentMenu == &stopWatchMenu) {}
+            else if(currentMenu == &settingsMenu) {}
 
             lastActivity = lastDebounceSelect = now;
         }
@@ -106,8 +107,10 @@ void Gui::render()
                 mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
             else if(currentMenu == &timerMenu)
                 displayTimer(display, *this);
-            //else if(currentMenu == &stopWatchMenu)
-            //else if(currentMenu == &settingsMenu)
+            else if(currentMenu == &stopWatchMenu) 
+                displayStopWatch(display, *this);
+            else if(currentMenu == &settingsMenu)
+                displaySettings(display, *this);
         } while(display.nextPage());
     }
 }

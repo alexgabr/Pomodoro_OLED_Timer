@@ -3,9 +3,7 @@
 #include "Arduino.h"
 #include <U8g2lib.h>
 
-#include "Page.h"
 #include "Menu.h"
-#include "defines.h"
 
 class Gui {
     private:

@@ -19,7 +19,7 @@ Button mainMenu_buttons[3] = {
     Button(u8g2.getU8g2())
 };
 
-const char *mainMenu_button_name[3] = {"Timer", "StopWatch", "Settings"};
+const char *mainMenu_button_name[] = {"Timer", "StopWatch", "Settings"};
 uint8_t coords[3][2] = {{35, 30}, {35, 45}, {35, 60}};
 Menu mainMenu(u8g2.getU8g2(), "Meniu", mainMenu_buttons, mainMenu_button_name, coords, 3);
 
@@ -30,9 +30,31 @@ Button timerButtons[3] = {
     Button(u8g2.getU8g2())
 };
 
-const char *timer_button_name[3] = {"Back", "Start/Stop", "Reset"}; 
+const char *timer_button_name[] = {"Back", "Start/Stop", "Reset"}; 
 uint8_t timer_coords[3][2] = {{5, 20}, {15, 60}, {80, 60}};
 Menu timerMenu(u8g2.getU8g2(), "Timer", timerButtons, timer_button_name, timer_coords, 3);
+
+// ----- StopWatch menu declaration -----
+Button stopWatchButtons[3] = {
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2())
+};
+
+const char *stopWatch_button_name[] = {"Back", "Start/Stop", "Reset"}; 
+uint8_t stopWatch_coords[3][2] = {{5, 20}, {15, 60}, {80, 60}};
+Menu stopWatchMenu(u8g2.getU8g2(), "StopWatch", stopWatchButtons, stopWatch_button_name, stopWatch_coords, 3);
+
+// ----- StopWatch menu declaration -----
+Button settingsButtons[3] = {
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2())
+};
+
+const char *settings_button_name[] = {"", "", ""};
+uint8_t settings_coords[3][2] = {{5, 20}, {15, 60}, {80, 60}};
+Menu settingsMenu(u8g2.getU8g2(), "Settings", settingsButtons, settings_button_name, settings_coords, 3);
 
 // ----- Gui declaration -----
 Gui gui(u8g2, &mainMenu, upButton, downButton, selectButton);

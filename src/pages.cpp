@@ -4,8 +4,8 @@
 
 extern Menu timerMenu;
 extern Menu mainMenu;
-// extern Menu stopWatchMenu;
-// extern Menu settingsMenu;
+extern Menu stopWatchMenu;
+extern Menu settingsMenu;
 
 extern Timer pomodoroTimer;
 
