@@ -5,6 +5,8 @@
 #include "Menu.h"
 #include "Gui.h"
 
+#include "Timerlib.h"
+
 #include "defines.h"
 
 //declaring the oled display in landscape mode
@@ -34,6 +36,9 @@ Menu timerMenu(u8g2.getU8g2(), "Timer", timerButtons, timer_button_name, timer_c
 
 // Gui declaration
 Gui gui(u8g2, &mainMenu, upButton, downButton, selectButton);
+
+// Timer declaration
+Timer pomodoroTimer(25 * 60 * 1000);
 
 void setup() {
     Serial.begin(115200);
