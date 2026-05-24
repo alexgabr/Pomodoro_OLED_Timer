@@ -30,28 +30,33 @@ void Gui::handleInput()
 
     uint32_t now = millis();
 
-    if(currentUp != lastUpDetection) {
-        if(currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE) {
+    /* UP BUTTON */
+    if(currentUp != lastUpDetection ) {
+        if(currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
             currentMenu->prevSelect();
 
-            lastActivity = lastDebounceUp = now;
+            lastDebounceUp = now;
         }
 
+        lastActivity = now;
         lastUpDetection = currentUp;
     }
 
+    /* DOWN BUTTON */
     if(currentDown != lastDownDetection) {
-        if(currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE) {
+        if(currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
             currentMenu->nextSelect();
 
-            lastActivity = lastDebounceDown = now;
+            lastDebounceDown = now;
         }
 
+        lastActivity = now;
         lastDownDetection = currentDown;
     }
 
+    /* SELECT BUTTON */
     if(currentSelect != lastSelectDetection) {
-        if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE) {
+        if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
             uint8_t option = currentMenu->getSelect();
 
             if(currentMenu == &mainMenu) {
@@ -105,10 +110,14 @@ void Gui::handleInput()
                         break;
                 }
             }
-            else if(currentMenu == &settingsMenu) {}
+            else if(currentMenu == &settingsMenu) {
+                
+            }
 
-            lastActivity = lastDebounceSelect = now;
+            lastDebounceSelect = now;
         }
+
+        lastActivity = now;
         lastSelectDetection = currentSelect;
     }
 }
