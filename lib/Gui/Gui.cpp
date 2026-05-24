@@ -1,5 +1,6 @@
 #include "Gui.h"
 #include "Timerlib.h"
+#include "Stopwatch.h"
 
 #include "pages.h"
 #include "defines.h"
@@ -10,6 +11,7 @@ extern Menu stopWatchMenu;
 extern Menu settingsMenu;
 
 extern Timer pomodoroTimer;
+extern Stopwatch stopWatch;
 
 Gui::Gui(U8G2 &display, Menu *homeMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), homeMenu(homeMenu), currentMenu(homeMenu)
 {
@@ -85,7 +87,24 @@ void Gui::handleInput()
                         break;
                 }
             }
-            else if(currentMenu == &stopWatchMenu) {}
+            else if(currentMenu == &stopWatchMenu) {
+                switch (option) {
+                    case 0:
+                        changeMenu(&mainMenu); // BACK
+                        break;
+                    case 1:
+                        if(stopWatch.isRunning())
+                            stopWatch.stop();
+                        else
+                            stopWatch.start();
+                        break;
+                    case 2:
+                        stopWatch.restart();
+                        break;
+                    default:
+                        break;
+                }
+            }
             else if(currentMenu == &settingsMenu) {}
 
             lastActivity = lastDebounceSelect = now;
@@ -109,8 +128,8 @@ void Gui::render()
                 displayTimer(display, *this);
             else if(currentMenu == &stopWatchMenu) 
                 displayStopWatch(display, *this);
-            else if(currentMenu == &settingsMenu)
-                displaySettings(display, *this);
+            //else if(currentMenu == &settingsMenu)
+                //displaySettings(display, *this);
         } while(display.nextPage());
     }
 }

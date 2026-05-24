@@ -1,11 +1,10 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
-#include "Button.h"
-#include "Menu.h"
 #include "Gui.h"
 
 #include "Timerlib.h"
+#include "Stopwatch.h"
 
 #include "defines.h"
 
@@ -61,6 +60,9 @@ Gui gui(u8g2, &mainMenu, upButton, downButton, selectButton);
 
 // ----- Timer declaration -----
 Timer pomodoroTimer(25 * 60 * 1000);
+
+// ----- Stopwatch declaration -----
+Stopwatch stopWatch;
 
 void setup() {
     Serial.begin(115200);
