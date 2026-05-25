@@ -1,12 +1,14 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
+#include "defines.h"
+
 #include "Gui.h"
 
 #include "Timerlib.h"
 #include "Stopwatch.h"
 
-#include "defines.h"
+int pomodoro_time = DEFAULT_POMODORO_TIME;
 
 // declaring the oled display in landscape mode
 U8G2_SSD1309_128X64_NONAME0_1_HW_I2C u8g2(U8G2_R0);
@@ -59,7 +61,7 @@ Menu settingsMenu(u8g2.getU8g2(), "Settings", settingsButtons, settings_button_n
 Gui gui(u8g2, &mainMenu, upButton, downButton, selectButton);
 
 // ----- Timer declaration -----
-Timer pomodoroTimer(25 * 60 * 1000);
+Timer pomodoroTimer(pomodoro_time * 60 * 1000); 
 
 // ----- Stopwatch declaration -----
 Stopwatch stopWatch;

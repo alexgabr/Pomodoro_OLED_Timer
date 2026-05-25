@@ -56,3 +56,8 @@ void Timer::getFormattedTime(uint8_t &minutes, uint8_t &seconds)
     minutes = remainingSec / 60;
     seconds = remainingSec % 60;
 }
+
+void Timer::setPomodoroLength(uint16_t minutes)
+{
+    duration = minutes * 60 * 1000;
+}

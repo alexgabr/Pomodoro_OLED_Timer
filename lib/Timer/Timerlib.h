@@ -20,4 +20,6 @@ class Timer {
         bool isRunning();
 
         void getFormattedTime(uint8_t &minutes, uint8_t &seconds);
+
+        void setPomodoroLength(uint16_t minutes);
 };
