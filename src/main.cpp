@@ -46,7 +46,7 @@ const char *stopWatch_button_name[] = {"Back", "Start/Stop", "Reset"};
 uint8_t stopWatch_coords[3][2] = {{5, 20}, {15, 60}, {80, 60}};
 Menu stopWatchMenu(u8g2.getU8g2(), "StopWatch", stopWatchButtons, stopWatch_button_name, stopWatch_coords, 3);
 
-// ----- StopWatch menu declaration -----
+// ----- Settings menu declaration -----
 Button settingsButtons[3] = {
     Button(u8g2.getU8g2()),
     Button(u8g2.getU8g2()),
