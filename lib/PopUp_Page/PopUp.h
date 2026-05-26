@@ -17,10 +17,10 @@ class PopUp: public Page {
             uint8_t x, y; //coords for the text
         } button[32];
     public:
-        PopUp(u8g2_t *display, const char *title = "", uint16_t width, uint16_t height);
-        PopUp(u8g2_t *display, const char *title = "", uint16_t width, uint16_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2]);
+        PopUp(u8g2_t *display, uint8_t width, uint8_t height, const char *title = "");
+        PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2], const char *title = "");
 
-        void draw();
+        void draw(const uint8_t *title_font, const uint8_t *content_font, bool title_is_centered);
 
         uint16_t getWidth();
         uint16_t getHeight();

@@ -66,6 +66,10 @@ Timer pomodoroTimer(pomodoro_time * 60 * 1000);
 // ----- Stopwatch declaration -----
 Stopwatch stopWatch;
 
+// POPUP TEST
+#include "PopUp.h"
+PopUp p(u8g2.getU8g2(), 70, 45, "Test");
+
 void setup() {
     Serial.begin(115200);
 
@@ -80,5 +84,10 @@ void setup() {
 }
 
 void loop() {
-    gui.update();
+    //gui.update();
+
+    u8g2.firstPage();
+    do {
+        p.draw(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+    } while(u8g2.nextPage());
 }
