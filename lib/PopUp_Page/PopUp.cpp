@@ -85,11 +85,16 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetFont(display, content_font);
 
     for(uint8_t i = 0; i < nrButtons; i++)
-        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name);
+        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
     content(message);
 
     u8g2_SetMaxClipWindow(display); // end of function
+}
+
+void PopUp::setMessage(char *message)
+{
+    this->message = message;
 }
 
 void PopUp::nextSelect()

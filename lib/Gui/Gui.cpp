@@ -76,7 +76,9 @@ void Gui::handleInput()
             if (isPopUpActive()) {
                 option = activePopUp->getSelect();
 
-                /*prelucram optiunea selectata*/
+                if(activePopUp == &alertPopUp)
+                    closePopUp();
+                // else if()
             }   
             else {
                 option = currentMenu->getSelect();
@@ -153,28 +155,27 @@ void Gui::handleInput()
 
 void Gui::render()
 {
-    if (millis() - lastActivity >= INACTIVITY)
+    display.firstPage();
+    do {
+        if (currentMenu == &mainMenu)
+            mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+        else if (currentMenu == &timerMenu)
+            displayTimer(display, *this);
+        else if (currentMenu == &stopWatchMenu)
+            displayStopWatch(display, *this);
+        // else if(currentMenu == &settingsMenu)
+        // displaySettings(display, *this);
+
+        if(isPopUpActive())
+            if(activePopUp == &alertPopUp)
+                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
+            // else if()
+    } while(display.nextPage());
+
+    if (millis() - lastActivity >= INACTIVITY && !isPopUpActive())
         display.setPowerSave(true);
     else
-    {
         display.setPowerSave(false);
-
-        display.firstPage();
-        do
-        {
-            if (currentMenu == &mainMenu)
-                mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
-            else if (currentMenu == &timerMenu)
-                displayTimer(display, *this);
-            else if (currentMenu == &stopWatchMenu)
-                displayStopWatch(display, *this);
-            // else if(currentMenu == &settingsMenu)
-            // displaySettings(display, *this);
-
-            if(isPopUpActive())
-                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true); //todo: trebuie selectata functia specifica fiecarui tip de popup
-        } while (display.nextPage());
-    }
 }
 
 /* PUBLIC FUNCTIONS */

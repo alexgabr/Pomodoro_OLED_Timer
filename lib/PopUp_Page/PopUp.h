@@ -34,6 +34,8 @@ class PopUp: public Page {
         void nextSelect();
         void prevSelect();
 
+        void setMessage(char *message);
+
         uint8_t getSelect();
         uint16_t getWidth();
         uint16_t getHeight();
