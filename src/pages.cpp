@@ -8,7 +8,8 @@ extern Menu mainMenu;
 extern Menu stopWatchMenu;
 extern Menu settingsMenu;
 
-extern PopUp alertPopUp;
+extern PopUp one_button_alertPopUp;
+extern PopUp two_buttons_alertPopUp;
 
 extern Timer pomodoroTimer;
 extern Stopwatch stopWatch;
@@ -26,8 +27,8 @@ void displayTimer(U8G2 &display, Gui &gui) {
     display.print(u8x8_u8toa(seconds, 2));
 
     if(minutes == 0 && seconds == 0) {
-        alertPopUp.setMessage("Pomodoro Finalizat!!!");
-        gui.showPopUp(&alertPopUp);
+        one_button_alertPopUp.setMessage("Pomodoro Finalizat!!!");
+        gui.showPopUp(&one_button_alertPopUp);
     }
         
 }
@@ -47,5 +48,5 @@ void displayStopWatch(U8G2 &display, Gui &gui) {
 }
 
 void displaySettings(U8G2 &display, Gui &gui) {
-    // Implementare setări
+    settingsMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
 }

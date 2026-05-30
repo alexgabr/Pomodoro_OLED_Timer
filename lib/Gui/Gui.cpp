@@ -12,7 +12,8 @@ extern Menu stopWatchMenu;
 extern Menu settingsMenu;
 
 extern PopUp setValuePopUp;
-extern PopUp alertPopUp;
+extern PopUp one_button_alertPopUp;
+extern PopUp two_buttons_alertPopUp;
 
 extern Timer pomodoroTimer;
 extern Stopwatch stopWatch;
@@ -76,9 +77,20 @@ void Gui::handleInput()
             if (isPopUpActive()) {
                 option = activePopUp->getSelect();
 
-                if(activePopUp == &alertPopUp)
+                if(activePopUp == &one_button_alertPopUp)
                     closePopUp();
-                // else if()
+                else if(activePopUp == &two_buttons_alertPopUp) {
+                    if(currentMenu == &stopWatchMenu)
+                        switch(option) {
+                            case 0:
+                                closePopUp();
+                                stopWatch.start();
+                                break;
+                            case 1:
+                                closePopUp();
+                                stopWatch.restart();
+                        }
+                }
             }   
             else {
                 option = currentMenu->getSelect();
@@ -102,8 +114,7 @@ void Gui::handleInput()
                 }
                 else if (currentMenu == &timerMenu)
                 {
-                    switch (option)
-                    {
+                    switch (option) {
                     case 0:
                         changeMenu(&mainMenu); // BACK
                         break;
@@ -122,8 +133,7 @@ void Gui::handleInput()
                 }
                 else if (currentMenu == &stopWatchMenu)
                 {
-                    switch (option)
-                    {
+                    switch (option) {
                     case 0:
                         changeMenu(&mainMenu); // BACK
                         break;
@@ -134,7 +144,12 @@ void Gui::handleInput()
                             stopWatch.start();
                         break;
                     case 2:
-                        stopWatch.restart();
+                        if(stopWatch.isRunning()) {
+                            stopWatch.stop();
+
+                            two_buttons_alertPopUp.setMessage("Do you want to restart\nthe timer?");
+                            showPopUp(&two_buttons_alertPopUp);
+                        }
                         break;
                     default:
                         break;
@@ -163,13 +178,16 @@ void Gui::render()
             displayTimer(display, *this);
         else if (currentMenu == &stopWatchMenu)
             displayStopWatch(display, *this);
-        // else if(currentMenu == &settingsMenu)
-        // displaySettings(display, *this);
+        else if(currentMenu == &settingsMenu)
+            displaySettings(display, *this);
 
-        if(isPopUpActive())
-            if(activePopUp == &alertPopUp)
+        if(isPopUpActive()) {
+            if(activePopUp == &one_button_alertPopUp)
                 activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
-            // else if()
+            else if(activePopUp == &two_buttons_alertPopUp)
+                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
+        }
+            
     } while(display.nextPage());
 
     if (millis() - lastActivity >= INACTIVITY && !isPopUpActive())

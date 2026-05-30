@@ -54,8 +54,8 @@ Button settingsButtons[3] = {
     Button(u8g2.getU8g2())
 };
 
-const char *settings_button_name[] = {"", "", ""};
-uint8_t settings_coords[3][2] = {{5, 20}, {15, 60}, {80, 60}};
+const char *settings_button_name[] = {"Back", "Change pomodoro", "Others"};
+uint8_t settings_coords[3][2] = {{5, 20}, {30, 30}, {30, 45}};
 Menu settingsMenu(u8g2.getU8g2(), "Settings", settingsButtons, settings_button_name, settings_coords, 3);
 
 // ----- Gui declaration -----
@@ -67,7 +67,7 @@ Timer pomodoroTimer(pomodoro_time * 60 * 1000);
 // ----- Stopwatch declaration -----
 Stopwatch stopWatch;
 
-// POPUP TEST
+// ----- Popup declarations -----
 Button popupButtons[3] = {
     Button(u8g2.getU8g2()),
     Button(u8g2.getU8g2()),
@@ -84,7 +84,16 @@ Button ok_button[1] = {
 
 const char *ok_name[] = {"Ok"};
 uint8_t ok_coords[1][2] = {{60, 50}};
-PopUp alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Test Alerta", "Aveti un nou mesaj");
+PopUp one_button_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Alert", "Aveti un nou mesaj");
+
+Button two_buttons[2] = {
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2())
+};
+
+const char *two_buttons_name[] = {"Cancel", "Ok"};
+uint8_t two_buttons_coords[2][2] = {{35, 50}, {85, 50}};
+PopUp two_buttons_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 2, two_buttons, two_buttons_name, two_buttons_coords, "Alert", "Aveti un nou mesaj");
 
 void setup() {
     Serial.begin(115200);
