@@ -79,7 +79,15 @@ Button popupButtons[3] = {
 
 const char *popup_button_name[] = {"+", "-", "Ok"};
 uint8_t popup_coords[3][2] = {{28, 35}, {94, 35}, {60, 50}};
-PopUp p(u8g2.getU8g2(), 90, 55, 3, popupButtons, popup_button_name, popup_coords, "Test");
+PopUp p(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 3, popupButtons, popup_button_name, popup_coords, "Test");
+
+Button ok_button[1] = {
+    Button(u8g2.getU8g2())
+};
+
+const char *ok_name[] = {"Ok"};
+uint8_t ok_coords[1][2] = {{60, 50}};
+PopUp alertP(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Test Alerta", "Aveti un nou mesaj");
 
 void setup() {
     Serial.begin(115200);
@@ -105,7 +113,10 @@ void loop() {
         u8g2.print("Acesta este un test");
 
         if(ok) {
-            p.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_changePomodoroDuration, true);
+            //p.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_changePomodoroDuration, true);
+            alertP.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
         }
+
+        u8g2.setFont(u8g2_font_ncenB08_tr);
     } while(u8g2.nextPage());
 }

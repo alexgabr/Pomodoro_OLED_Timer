@@ -13,30 +13,7 @@ void PopUp::clearWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
     u8g2_SetDrawColor(display, 1);
 }
 
-/* CONSTRUCTORS */
-PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, const char *title) : Page(display, title)
-{
-    this->width = width;
-    this->height = height;
-}
-
-PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2], const char *title) : Page(display, title)
-{
-    this->width = width;
-    this->height = height;
-    this->nrButtons = nrButtons;
-
-    for(int i = 0; i < nrButtons; i++) {
-        button[i].bttn = bttn_list[i];
-        button[i].bttn_name = bttn_names[i];
-
-        button[i].x = coords[i][0];
-        button[i].y = coords[i][1];
-    }
-}
-
-/* PUBLIC FUNCTIONS */
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
+void PopUp::initWindow()
 {
     u8g2_SetDrawColor(display, 1);
     u8g2_SetBitmapMode(display, 1);
@@ -51,21 +28,68 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetBitmapMode(display, 0);
 
     u8g2_SetClipWindow(display, x0, y0, x1, y1);
-    
     clearWindow(x0, y0, x1, y1);
+
     u8g2_DrawFrame(display, x0, y0, width, height);
+}
+
+/* CONSTRUCTORS */
+PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, const char *title, const char *message) : Page(display, title)
+{
+    this->width = width;
+    this->height = height;
+    this->message = message;
+}
+
+PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2], const char *title, const char *message) : Page(display, title)
+{
+    this->width = width;
+    this->height = height;
+    this->nrButtons = nrButtons;
+    this->message = message;
+
+    for(int i = 0; i < nrButtons; i++) {
+        button[i].bttn = bttn_list[i];
+        button[i].bttn_name = bttn_names[i];
+
+        button[i].x = coords[i][0];
+        button[i].y = coords[i][1];
+    }
+}
+
+/* PUBLIC FUNCTIONS */
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
+{
+    initWindow();
 
     u8g2_SetFont(display, title_font);
-    displayPageTitle(width, height, true);
+    displayPageTitle(width, height, title_is_centered);
 
     u8g2_SetFont(display, content_font);
+    
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name);
     
     content(2);
 
-    // end of function
-    u8g2_SetMaxClipWindow(display);
+    u8g2_SetMaxClipWindow(display); // end of function
+}
+
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*), bool title_is_centered)
+{
+    initWindow();
+
+    u8g2_SetFont(display, title_font);
+    displayPageTitle(width, height, title_is_centered);
+
+    u8g2_SetFont(display, content_font);
+
+    for(uint8_t i = 0; i < nrButtons; i++)
+        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name);
+    
+    content(message);
+
+    u8g2_SetMaxClipWindow(display); // end of function
 }
 
 uint16_t PopUp::getHeight()

@@ -5,4 +5,4 @@
 
 
 void content_changePomodoroDuration(uint8_t nr);
-void content_alert(char *message);
+void content_alert(const char *message);
