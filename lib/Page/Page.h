@@ -12,6 +12,7 @@ class Page
         u8g2_t *display;
         
         void displayPageTitle(bool centered = false);
+        void displayPageTitle(uint8_t pageWidth, uint8_t pageHeight, bool centered = false);
     public:
         Page(u8g2_t *display, const char *title = ""); // Constructor
 

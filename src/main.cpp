@@ -68,7 +68,17 @@ Stopwatch stopWatch;
 
 // POPUP TEST
 #include "PopUp.h"
-PopUp p(u8g2.getU8g2(), 70, 45, "Test");
+#include "bitmaps.h"
+
+Button popupButtons[3] = {
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2()),
+    Button(u8g2.getU8g2())
+};
+
+const char *popup_button_name[] = {"+", "-", "Ok"};
+uint8_t popup_coords[3][2] = {{28, 35}, {94, 35}, {60, 50}};
+PopUp p(u8g2.getU8g2(), 90, 55, 3, popupButtons, popup_button_name, popup_coords, "Test");
 
 void setup() {
     Serial.begin(115200);
@@ -79,15 +89,22 @@ void setup() {
     // OLED Display initialization
     u8g2.begin();
     u8g2.setContrast(64); // 25% brightness
+    u8g2.setFont(u8g2_font_ncenB08_tr);
 
     gui.init();
 }
 
 void loop() {
     //gui.update();
+    bool ok = digitalRead(selectButton);
 
     u8g2.firstPage();
     do {
-        p.draw(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+        u8g2.setCursor(15, 30);
+        u8g2.print("Acesta este un test");
+
+        if(ok) {
+            p.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, true);
+        }
     } while(u8g2.nextPage());
 }

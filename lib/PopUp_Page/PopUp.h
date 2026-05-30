@@ -16,6 +16,8 @@ class PopUp: public Page {
             const char *bttn_name;
             uint8_t x, y; //coords for the text
         } button[32];
+
+        void clearWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
     public:
         PopUp(u8g2_t *display, uint8_t width, uint8_t height, const char *title = "");
         PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2], const char *title = "");
