@@ -36,7 +36,7 @@ PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, 
 }
 
 /* PUBLIC FUNCTIONS */
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
 {
     u8g2_SetDrawColor(display, 1);
     u8g2_SetBitmapMode(display, 1);
@@ -61,6 +61,8 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, bool ti
     u8g2_SetFont(display, content_font);
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name);
+    
+    content(2);
 
     // end of function
     u8g2_SetMaxClipWindow(display);

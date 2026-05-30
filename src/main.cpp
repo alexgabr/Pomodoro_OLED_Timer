@@ -69,6 +69,7 @@ Stopwatch stopWatch;
 // POPUP TEST
 #include "PopUp.h"
 #include "bitmaps.h"
+#include "content.h"
 
 Button popupButtons[3] = {
     Button(u8g2.getU8g2()),
@@ -104,7 +105,7 @@ void loop() {
         u8g2.print("Acesta este un test");
 
         if(ok) {
-            p.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, true);
+            p.draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_changePomodoroDuration, true);
         }
     } while(u8g2.nextPage());
 }
