@@ -4,11 +4,15 @@
 
 #include "pages.h"
 #include "defines.h"
+#include "content.h"
 
 extern Menu timerMenu;
 extern Menu mainMenu;
 extern Menu stopWatchMenu;
 extern Menu settingsMenu;
+
+extern PopUp setValuePopUp;
+extern PopUp alertPopUp;
 
 extern Timer pomodoroTimer;
 extern Stopwatch stopWatch;
@@ -31,9 +35,14 @@ void Gui::handleInput()
     uint32_t now = millis();
 
     /* UP BUTTON */
-    if(currentUp != lastUpDetection ) {
-        if(currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
-            currentMenu->prevSelect();
+    if (currentUp != lastUpDetection)
+    {
+        if (currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY)
+        {
+            if (isPopUpActive())
+                activePopUp->prevSelect();
+            else
+                currentMenu->prevSelect();
 
             lastDebounceUp = now;
         }
@@ -43,9 +52,14 @@ void Gui::handleInput()
     }
 
     /* DOWN BUTTON */
-    if(currentDown != lastDownDetection) {
-        if(currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
-            currentMenu->nextSelect();
+    if (currentDown != lastDownDetection)
+    {
+        if (currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY)
+        {
+            if (isPopUpActive())
+                activePopUp->nextSelect();
+            else
+                currentMenu->nextSelect();
 
             lastDebounceDown = now;
         }
@@ -55,12 +69,22 @@ void Gui::handleInput()
     }
 
     /* SELECT BUTTON */
-    if(currentSelect != lastSelectDetection) {
-        if(currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
-            uint8_t option = currentMenu->getSelect();
+    if (currentSelect != lastSelectDetection) {
+        if (currentSelect && now - lastDebounceSelect >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY) {
+            uint8_t option;
 
-            if(currentMenu == &mainMenu) {
-                switch(option) {
+            if (isPopUpActive()) {
+                option = activePopUp->getSelect();
+
+                /*prelucram optiunea selectata*/
+            }   
+            else {
+                option = currentMenu->getSelect();
+
+                if (currentMenu == &mainMenu)
+                {
+                    switch (option)
+                    {
                     case 0:
                         changeMenu(&timerMenu); // BACK
                         break;
@@ -72,15 +96,17 @@ void Gui::handleInput()
                         break;
                     default:
                         break;
+                    }
                 }
-            }
-            else if(currentMenu == &timerMenu) {
-                switch(option) {
+                else if (currentMenu == &timerMenu)
+                {
+                    switch (option)
+                    {
                     case 0:
                         changeMenu(&mainMenu); // BACK
                         break;
                     case 1:
-                        if(pomodoroTimer.isRunning())
+                        if (pomodoroTimer.isRunning())
                             pomodoroTimer.stop();
                         else
                             pomodoroTimer.start();
@@ -90,15 +116,17 @@ void Gui::handleInput()
                         break;
                     default:
                         break;
+                    }
                 }
-            }
-            else if(currentMenu == &stopWatchMenu) {
-                switch (option) {
+                else if (currentMenu == &stopWatchMenu)
+                {
+                    switch (option)
+                    {
                     case 0:
                         changeMenu(&mainMenu); // BACK
                         break;
                     case 1:
-                        if(stopWatch.isRunning())
+                        if (stopWatch.isRunning())
                             stopWatch.stop();
                         else
                             stopWatch.start();
@@ -108,10 +136,11 @@ void Gui::handleInput()
                         break;
                     default:
                         break;
+                    }
                 }
-            }
-            else if(currentMenu == &settingsMenu) {
-                
+                else if (currentMenu == &settingsMenu)
+                {
+                }
             }
 
             lastDebounceSelect = now;
@@ -124,22 +153,27 @@ void Gui::handleInput()
 
 void Gui::render()
 {
-    if(millis() - lastActivity >= INACTIVITY)
+    if (millis() - lastActivity >= INACTIVITY)
         display.setPowerSave(true);
-    else {
+    else
+    {
         display.setPowerSave(false);
 
         display.firstPage();
-        do {
-            if(currentMenu == &mainMenu)
+        do
+        {
+            if (currentMenu == &mainMenu)
                 mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
-            else if(currentMenu == &timerMenu)
+            else if (currentMenu == &timerMenu)
                 displayTimer(display, *this);
-            else if(currentMenu == &stopWatchMenu) 
+            else if (currentMenu == &stopWatchMenu)
                 displayStopWatch(display, *this);
-            //else if(currentMenu == &settingsMenu)
-                //displaySettings(display, *this);
-        } while(display.nextPage());
+            // else if(currentMenu == &settingsMenu)
+            // displaySettings(display, *this);
+
+            if(isPopUpActive())
+                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true); //todo: trebuie selectata functia specifica fiecarui tip de popup
+        } while (display.nextPage());
     }
 }
 
@@ -168,4 +202,19 @@ void Gui::changeMenu(Menu *newMenu)
 Menu *Gui::getMenu()
 {
     return currentMenu;
+}
+
+void Gui::showPopUp(PopUp *popUp)
+{
+    activePopUp = popUp;
+}
+
+void Gui::closePopUp()
+{
+    activePopUp = nullptr;
+}
+
+bool Gui::isPopUpActive()
+{
+    return activePopUp != nullptr;
 }

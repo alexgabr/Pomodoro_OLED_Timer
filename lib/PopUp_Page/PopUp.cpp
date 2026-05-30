@@ -1,6 +1,6 @@
 #include "PopUp.h"
 
-#include <bitmaps.h>
+#include "bitmaps.h"
 
 /* PRIVATE FUNCTIONS */
 void PopUp::clearWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
@@ -90,6 +90,24 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     content(message);
 
     u8g2_SetMaxClipWindow(display); // end of function
+}
+
+void PopUp::nextSelect()
+{
+    select++;
+}
+
+void PopUp::prevSelect()
+{
+    if(select > 0)
+        select--;
+    else
+        select = nrButtons - 1;
+}
+
+uint8_t PopUp::getSelect()
+{
+    return select % nrButtons;
 }
 
 uint16_t PopUp::getHeight()

@@ -20,6 +20,8 @@ class PopUp: public Page {
             uint8_t x, y; //coords for the text
         } button[32];
 
+        uint8_t select = 0; // current selected button
+
         void clearWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
         void initWindow();
     public:
@@ -29,6 +31,10 @@ class PopUp: public Page {
         void draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered = false);
         void draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*), bool title_is_centered = false);
 
+        void nextSelect();
+        void prevSelect();
+
+        uint8_t getSelect();
         uint16_t getWidth();
         uint16_t getHeight();
 };

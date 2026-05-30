@@ -4,13 +4,19 @@
 #include <U8g2lib.h>
 
 #include "Menu.h"
+#include "PopUp.h"
 
 class Gui {
     private:
-        // Objects
+        // Display
         U8G2 &display;
+
+        // Menu pointers
         Menu *homeMenu;
         Menu *currentMenu;
+
+        // PopUp pointers
+        PopUp *activePopUp = nullptr;
 
         // PIN definitions
         uint8_t pinUp;
@@ -37,4 +43,8 @@ class Gui {
 
         void changeMenu(Menu *newMenu); // change the current menu to a new one
         Menu *getMenu();
+
+        void showPopUp(PopUp *popUp);
+        void closePopUp();
+        bool isPopUpActive();
 };
