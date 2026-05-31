@@ -3,7 +3,6 @@
 #include "Stopwatch.h"
 
 #include "pages.h"
-#include "defines.h"
 #include "content.h"
 
 extern Menu timerMenu;
@@ -91,6 +90,23 @@ void Gui::handleInput()
                                 stopWatch.restart();
                         }
                 }
+                else if(activePopUp == &setValuePopUp) {
+                    switch (option) {
+                        case 0:
+                            if(value > MIN_POMODORO_TIME)
+                                value--;
+                            break;
+                        case 1:
+                            value++;
+                            break;
+                        case 2:
+                            pomodoro_time = value;
+                            pomodoroTimer.setPomodoroLength(pomodoro_time);
+                            
+                            closePopUp();
+                            break;
+                    }
+                }
             }   
             else {
                 option = currentMenu->getSelect();
@@ -155,8 +171,20 @@ void Gui::handleInput()
                         break;
                     }
                 }
-                else if (currentMenu == &settingsMenu)
-                {
+                else if (currentMenu == &settingsMenu) {
+                    switch(option) {
+                        case 0:
+                            changeMenu(&mainMenu);
+                            break;
+                        case 1:
+                            value = pomodoro_time;
+
+                            setValuePopUp.setTitle("Change value");
+                            showPopUp(&setValuePopUp);
+                            break;
+                        case 2:
+                            break;
+                    }
                 }
             }
 
@@ -186,6 +214,8 @@ void Gui::render()
                 activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
             else if(activePopUp == &two_buttons_alertPopUp)
                 activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
+            else if(activePopUp == &setValuePopUp)
+                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_changePomodoroDuration, value, true);
         }
             
     } while(display.nextPage());

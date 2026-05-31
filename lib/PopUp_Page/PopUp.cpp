@@ -58,7 +58,7 @@ PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, 
 }
 
 /* PUBLIC FUNCTIONS */
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), uint8_t option, bool title_is_centered)
 {
     initWindow();
 
@@ -68,9 +68,9 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetFont(display, content_font);
     
     for(uint8_t i = 0; i < nrButtons; i++)
-        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name);
+        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
-    content(2);
+    content(option);
 
     u8g2_SetMaxClipWindow(display); // end of function
 }

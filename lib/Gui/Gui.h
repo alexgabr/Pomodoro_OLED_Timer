@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
+#include "defines.h"
+
 #include "Menu.h"
 #include "PopUp.h"
 
@@ -17,6 +19,7 @@ class Gui {
 
         // PopUp pointers
         PopUp *activePopUp = nullptr;
+        uint8_t value;
 
         // PIN definitions
         uint8_t pinUp;
