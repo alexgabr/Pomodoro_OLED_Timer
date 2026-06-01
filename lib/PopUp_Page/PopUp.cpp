@@ -58,6 +58,23 @@ PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, 
 }
 
 /* PUBLIC FUNCTIONS */
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(void), bool title_is_centered)
+{
+    initWindow();
+
+    u8g2_SetFont(display, title_font);
+    displayPageTitle(width, height, title_is_centered);
+
+    u8g2_SetFont(display, content_font);
+    
+    for(uint8_t i = 0; i < nrButtons; i++)
+        button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
+    
+    content();
+
+    u8g2_SetMaxClipWindow(display); // end of function
+}
+
 void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), uint8_t option, bool title_is_centered)
 {
     initWindow();
@@ -92,7 +109,7 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetMaxClipWindow(display); // end of function
 }
 
-void PopUp::setMessage(char *message)
+void PopUp::setMessage(const char *message)
 {
     this->message = message;
 }

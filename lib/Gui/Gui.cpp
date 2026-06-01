@@ -202,6 +202,8 @@ void Gui::handleInput()
                             showPopUp(&setValuePopUp);
                             break;
                         case 2:
+                            one_button_alertPopUp.setTitle("Device info");
+                            showPopUp(&one_button_alertPopUp);
                             break;
                     }
                 }
@@ -229,8 +231,12 @@ void Gui::render()
             displaySettings(display, *this);
 
         if(isPopUpActive()) {
-            if(activePopUp == &one_button_alertPopUp)
-                activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_alert, true);
+            if(activePopUp == &one_button_alertPopUp) {
+                if(currentMenu == &settingsMenu)
+                    activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_infoDevice, true);
+                else
+                    activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_alert, true);
+            }
             else if(activePopUp == &two_buttons_alertPopUp)
                 activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_alert, true);
             else if(activePopUp == &setValuePopUp)

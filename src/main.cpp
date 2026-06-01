@@ -54,7 +54,7 @@ Button settingsButtons[3] = {
     Button(u8g2.getU8g2())
 };
 
-const char *settings_button_name[] = {"Back", "Change pomodoro", "Others"};
+const char *settings_button_name[] = {"Back", "Change pomodoro", "Device Info"};
 uint8_t settings_coords[3][2] = {{5, 20}, {30, 33}, {30, 48}};
 Menu settingsMenu(u8g2.getU8g2(), "Settings", settingsButtons, settings_button_name, settings_coords, 3);
 
@@ -79,11 +79,11 @@ uint8_t popup_coords[3][2] = {{28, 35}, {94, 35}, {60, 53}};
 PopUp setValuePopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 3, popupButtons, popup_button_name, popup_coords, "");
 
 Button ok_button[1] = {
-    Button(u8g2.getU8g2())
+    Button(u8g2.getU8g2(), 26, 11)
 };
 
 const char *ok_name[] = {"Ok"};
-uint8_t ok_coords[1][2] = {{60, 50}};
+uint8_t ok_coords[1][2] = {{60, 53}};
 PopUp one_button_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Alert", "");
 
 Button two_buttons[2] = {
@@ -92,7 +92,7 @@ Button two_buttons[2] = {
 };
 
 const char *two_buttons_name[] = {"Cancel", "Ok"};
-uint8_t two_buttons_coords[2][2] = {{35, 50}, {85, 50}};
+uint8_t two_buttons_coords[2][2] = {{35, 53}, {85, 53}};
 PopUp two_buttons_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 2, two_buttons, two_buttons_name, two_buttons_coords, "Alert", "");
 
 void setup() {

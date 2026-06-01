@@ -67,3 +67,28 @@ void content_alert(const char *message) {
         }  
     }
 }
+
+void content_infoDevice() {
+    uint8_t x_text = (128 - DEFAULT_POPUP_WIDTH) / 2 + 8; // beginning of the line
+    uint8_t y_text = (64 - DEFAULT_POPUP_HEIGHT) / 2 + 20; // first line
+
+    esp_chip_info_t info;
+    esp_chip_info(&info);
+
+    u8g2.setCursor(x_text, y_text);
+    u8g2.print("Nr. of cores: ");
+    u8g2.print(info.cores);
+
+    y_text += 7;
+
+    u8g2.setCursor(x_text, y_text);
+    u8g2.print("Chip revision: ");
+    u8g2.print(info.revision);
+    
+    y_text += 7;
+
+    u8g2.setCursor(x_text, y_text);
+    u8g2.print("Flash memory: ");
+    u8g2.print(spi_flash_get_chip_size() / (1024 * 1024));
+    u8g2.print(" MB");
+}

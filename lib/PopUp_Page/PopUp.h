@@ -28,13 +28,14 @@ class PopUp: public Page {
         PopUp(u8g2_t *display, uint8_t width, uint8_t height, const char *title = "", const char *message = "");
         PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, Button bttn_list[32], const char *bttn_names[32], uint8_t coords[32][2], const char *title = "", const char *message = "");
 
+        void draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(void), bool title_is_centered = false);
         void draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), uint8_t option, bool title_is_centered = false);
         void draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*), bool title_is_centered = false);
 
         void nextSelect();
         void prevSelect();
 
-        void setMessage(char *message);
+        void setMessage(const char *message);
 
         uint8_t getSelect();
         uint16_t getWidth();
