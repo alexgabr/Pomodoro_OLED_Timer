@@ -79,16 +79,30 @@ void Gui::handleInput()
                 if(activePopUp == &one_button_alertPopUp)
                     closePopUp();
                 else if(activePopUp == &two_buttons_alertPopUp) {
-                    if(currentMenu == &stopWatchMenu)
+                    if(currentMenu == &stopWatchMenu) {
+                        closePopUp();
+
                         switch(option) {
-                            case 0:
-                                closePopUp();
+                            case 0: // CANCEL
                                 stopWatch.start();
                                 break;
-                            case 1:
-                                closePopUp();
+                            case 1: // OK
                                 stopWatch.restart();
+                                break;
                         }
+                    } 
+                    else if(currentMenu == &timerMenu) {
+                        closePopUp();
+
+                        switch(option) {
+                            case 0: // CANCEL
+                                pomodoroTimer.start();
+                                break;
+                            case 1: // OK
+                                pomodoroTimer.reset();
+                                break;
+                        }
+                    }
                 }
                 else if(activePopUp == &setValuePopUp) {
                     switch (option) {
@@ -141,7 +155,10 @@ void Gui::handleInput()
                             pomodoroTimer.start();
                         break;
                     case 2:
-                        pomodoroTimer.reset();
+                        if(pomodoroTimer.isRunning()) {
+                            two_buttons_alertPopUp.setMessage("Do you want to end the timer?");
+                            showPopUp(&two_buttons_alertPopUp);
+                        }
                         break;
                     default:
                         break;
@@ -163,7 +180,7 @@ void Gui::handleInput()
                         if(stopWatch.isRunning()) {
                             stopWatch.stop();
 
-                            two_buttons_alertPopUp.setMessage("Do you want to restart\nthe timer?");
+                            two_buttons_alertPopUp.setMessage("Do you want to restart the timer?");
                             showPopUp(&two_buttons_alertPopUp);
                         }
                         break;
