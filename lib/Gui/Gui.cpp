@@ -17,11 +17,13 @@ extern PopUp two_buttons_alertPopUp;
 extern Timer pomodoroTimer;
 extern Stopwatch stopWatch;
 
-Gui::Gui(U8G2 &display, Menu *homeMenu, uint8_t up, uint8_t down, uint8_t select) : display(display), homeMenu(homeMenu), currentMenu(homeMenu)
+Gui::Gui(U8G2 &display, Menu *homeMenu, uint8_t up, uint8_t down, uint8_t select) : display(display)
 {
     pinUp = up;
     pinDown = down;
     pinSelect = select;
+
+    this->homeMenu = currentMenu = homeMenu;
 }
 
 /* PRIVATE FUNCTIONS */
@@ -155,7 +157,7 @@ void Gui::handleInput()
                             pomodoroTimer.start();
                         break;
                     case 2:
-                        if(pomodoroTimer.isRunning()) {
+                        if(pomodoroTimer.getRemainingTime()) {
                             two_buttons_alertPopUp.setMessage("Do you want to end the timer?");
                             showPopUp(&two_buttons_alertPopUp);
                         }
@@ -177,7 +179,7 @@ void Gui::handleInput()
                             stopWatch.start();
                         break;
                     case 2:
-                        if(stopWatch.isRunning()) {
+                        if(stopWatch.getElapsedTime()) {
                             stopWatch.stop();
 
                             two_buttons_alertPopUp.setMessage("Do you want to restart the timer?");
@@ -218,7 +220,7 @@ void Gui::render()
     display.firstPage();
     do {
         if (currentMenu == &mainMenu)
-            mainMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+            mainMenu.drawMenu(DEFAULT_TITLE_FONT, DEFAULT_TEXT_FONT, true);
         else if (currentMenu == &timerMenu)
             displayTimer(display, *this);
         else if (currentMenu == &stopWatchMenu)
@@ -228,11 +230,11 @@ void Gui::render()
 
         if(isPopUpActive()) {
             if(activePopUp == &one_button_alertPopUp)
-                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
+                activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_alert, true);
             else if(activePopUp == &two_buttons_alertPopUp)
-                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_alert, true);
+                activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_alert, true);
             else if(activePopUp == &setValuePopUp)
-                activePopUp->draw(u8g2_font_profont12_mf, u8g2_font_tiny5_t_all, content_changePomodoroDuration, value, true);
+                activePopUp->draw(DEFAULT_TITLE_FONT, DEFAULT_POPUP_TEXT_FONT, content_changePomodoroDuration, value, true);
         }
             
     } while(display.nextPage());

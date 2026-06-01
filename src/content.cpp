@@ -7,10 +7,15 @@
 extern U8G2 u8g2; // the display
 
 void content_changePomodoroDuration(uint8_t nr) {
-    u8g2.setCursor(50, 35);
+    uint8_t x_text = u8g2.getDisplayWidth() - DEFAULT_POPUP_WIDTH + 20;
+    uint8_t y_text = (u8g2.getDisplayHeight() - DEFAULT_POPUP_HEIGHT) / 2 + 28;
+
+    u8g2.setCursor(x_text, y_text);
     u8g2.print(u8x8_u8toa(nr, 2));
 
-    u8g2.setCursor(50, 43);
+    y_text += 7;
+
+    u8g2.setCursor(x_text, y_text);
     u8g2.print("min");
 }
 

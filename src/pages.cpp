@@ -17,36 +17,49 @@ extern Stopwatch stopWatch;
 void displayTimer(U8G2 &display, Gui &gui) {
     uint8_t minutes, seconds;
 
-    timerMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+    timerMenu.drawMenu(DEFAULT_TITLE_FONT, DEFAULT_TEXT_FONT, true);
 
     pomodoroTimer.getFormattedTime(minutes, seconds);
 
-    display.setCursor(50, 30);
-    display.print(u8x8_u8toa(minutes, 2)); // TODO: daca minutes > 99 => u8x8_u8toa(minutes, 3)
+    if(minutes < 100) {
+        display.setCursor(50, 30);
+        display.print(u8x8_u8toa(minutes, 2));
+    }
+    else {
+        display.setCursor(45, 30);
+        display.print(u8x8_u8toa(minutes, 3));
+    }
+
     display.print(":");
     display.print(u8x8_u8toa(seconds, 2));
 
     if(minutes == 0 && seconds == 0) {
         one_button_alertPopUp.setMessage("Pomodoro Finalizat!!!");
         gui.showPopUp(&one_button_alertPopUp);
-    }
-        
+    }   
 }
 
 void displayStopWatch(U8G2 &display, Gui &gui) {
     uint16_t minutes;
     uint8_t seconds;
 
-    stopWatchMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+    stopWatchMenu.drawMenu(DEFAULT_TITLE_FONT, DEFAULT_TEXT_FONT, true);
 
     stopWatch.getFormattedTime(minutes, seconds);
 
-    display.setCursor(50, 30);
-    display.print(u8x8_u8toa(minutes, 2)); // TODO: daca minutes > 99 => u8x8_u8toa(minutes, 3)
+    if(minutes < 100) {
+        display.setCursor(50, 30);
+        display.print(u8x8_u8toa(minutes, 2));
+    }
+    else {
+        display.setCursor(45, 30);
+        display.print(u8x8_u8toa(minutes, 3));
+    }
+    
     display.print(":");
     display.print(u8x8_u8toa(seconds, 2));
 }
 
 void displaySettings(U8G2 &display, Gui &gui) {
-    settingsMenu.drawMenu(u8g2_font_profont12_mf, u8g2_font_profont10_mf, true);
+    settingsMenu.drawMenu(DEFAULT_TITLE_FONT, DEFAULT_TEXT_FONT, true);
 }

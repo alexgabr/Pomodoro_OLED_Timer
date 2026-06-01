@@ -12,7 +12,10 @@ extern uint8_t pomodoro_time;
 
 #define DEFAULT_POPUP_WIDTH 90
 #define DEFAULT_POPUP_HEIGHT 55
+#define DEFAULT_POPUP_TEXT_FONT u8g2_font_tiny5_t_all
 
+#define DEFAULT_TITLE_FONT u8g2_font_profont12_mf
+#define DEFAULT_TEXT_FONT u8g2_font_profont10_mf
 
 // PINS
 const uint8_t selectButton = 16, upButton = 17, downButton = 18;

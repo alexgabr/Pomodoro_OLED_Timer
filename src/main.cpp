@@ -23,7 +23,7 @@ Button mainMenu_buttons[3] = {
 
 const char *mainMenu_button_name[] = {"Timer", "StopWatch", "Settings"};
 uint8_t coords[3][2] = {{35, 30}, {35, 45}, {35, 60}};
-Menu mainMenu(u8g2.getU8g2(), "Meniu", mainMenu_buttons, mainMenu_button_name, coords, 3);
+Menu mainMenu(u8g2.getU8g2(), "Pomodoro Timer", mainMenu_buttons, mainMenu_button_name, coords, 3);
 
 // ----- Timer menu declaration -----
 Button timerButtons[3] = {
@@ -71,12 +71,12 @@ Stopwatch stopWatch;
 Button popupButtons[3] = {
     Button(u8g2.getU8g2()),
     Button(u8g2.getU8g2()),
-    Button(u8g2.getU8g2())
+    Button(u8g2.getU8g2(), 26, 11)
 };
 
 const char *popup_button_name[] = {"-", "+", "Ok"};
 uint8_t popup_coords[3][2] = {{28, 35}, {94, 35}, {60, 53}};
-PopUp setValuePopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 3, popupButtons, popup_button_name, popup_coords, "Test");
+PopUp setValuePopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 3, popupButtons, popup_button_name, popup_coords, "");
 
 Button ok_button[1] = {
     Button(u8g2.getU8g2())
@@ -84,7 +84,7 @@ Button ok_button[1] = {
 
 const char *ok_name[] = {"Ok"};
 uint8_t ok_coords[1][2] = {{60, 50}};
-PopUp one_button_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Alert", "Aveti un nou mesaj");
+PopUp one_button_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 1, ok_button, ok_name, ok_coords, "Alert", "");
 
 Button two_buttons[2] = {
     Button(u8g2.getU8g2()),
@@ -93,7 +93,7 @@ Button two_buttons[2] = {
 
 const char *two_buttons_name[] = {"Cancel", "Ok"};
 uint8_t two_buttons_coords[2][2] = {{35, 50}, {85, 50}};
-PopUp two_buttons_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 2, two_buttons, two_buttons_name, two_buttons_coords, "Alert", "Aveti un nou mesaj");
+PopUp two_buttons_alertPopUp(u8g2.getU8g2(), DEFAULT_POPUP_WIDTH, DEFAULT_POPUP_HEIGHT, 2, two_buttons, two_buttons_name, two_buttons_coords, "Alert", "");
 
 void setup() {
     Serial.begin(115200);
@@ -104,7 +104,7 @@ void setup() {
     // OLED Display initialization
     u8g2.begin();
     u8g2.setContrast(64); // 25% brightness
-    u8g2.setFont(u8g2_font_ncenB08_tr);
+    u8g2.setFont(DEFAULT_TEXT_FONT);
 
     gui.init();
 }
