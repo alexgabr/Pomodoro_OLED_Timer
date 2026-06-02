@@ -91,4 +91,19 @@ void content_infoDevice() {
     u8g2.print("Flash memory: ");
     u8g2.print(spi_flash_get_chip_size() / (1024 * 1024));
     u8g2.print(" MB");
+
+    uint32_t upTime = millis() / 1000; // uptime in seconds
+    uint16_t mins = upTime / 60, sec = upTime % 60;
+    y_text += 7;
+
+    u8g2.setCursor(x_text, y_text);
+    u8g2.print("Uptime: ");
+
+    if(mins > 99)
+        u8g2.print(u8x8_u8toa(mins, 3));
+    else
+        u8g2.print(u8x8_u8toa(mins, 2));
+
+    u8g2.print(':');
+    u8g2.print(u8x8_u8toa(sec, 2));
 }

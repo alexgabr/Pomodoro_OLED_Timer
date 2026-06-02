@@ -157,7 +157,7 @@ void Gui::handleInput()
                             pomodoroTimer.start();
                         break;
                     case 2:
-                        if(pomodoroTimer.getRemainingTime()) {
+                        if(pomodoroTimer.getElapsedTime()) {
                             two_buttons_alertPopUp.setMessage("Do you want to end the timer?");
                             showPopUp(&two_buttons_alertPopUp);
                         }
