@@ -41,8 +41,12 @@ void Gui::handleInput()
     {
         if (currentUp && now - lastDebounceUp >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY)
         {
-            if (isPopUpActive())
-                activePopUp->prevSelect();
+            if (isPopUpActive()) {
+                if(currentMenu == &settingsMenu && activePopUp != &setValuePopUp)
+                    activePopUp->scrollUp();
+                else
+                    activePopUp->prevSelect();
+            }
             else
                 currentMenu->prevSelect();
 
@@ -58,8 +62,12 @@ void Gui::handleInput()
     {
         if (currentDown && now - lastDebounceDown >= BUTTON_DEBOUNCE && millis() - lastActivity < INACTIVITY)
         {
-            if (isPopUpActive())
-                activePopUp->nextSelect();
+            if (isPopUpActive()) {
+                if(currentMenu == &settingsMenu && activePopUp != &setValuePopUp)
+                    activePopUp->scrollDown();
+                else
+                    activePopUp->nextSelect();
+            }
             else
                 currentMenu->nextSelect();
 

@@ -10,6 +10,8 @@ class Page
     protected:
         const char *title;
         u8g2_t *display;
+
+        uint8_t scroll_line = 0;
         
         void displayPageTitle(bool centered = false);
         void displayPageTitle(uint8_t pageWidth, uint8_t pageHeight, bool centered = false);
@@ -18,4 +20,7 @@ class Page
 
         void setTitle(const char *title); // Set page title
         const char *getTitle(); // Get page title
+
+        void scrollUp();
+        void scrollDown();
 };

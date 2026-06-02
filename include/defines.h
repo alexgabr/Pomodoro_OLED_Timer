@@ -17,5 +17,7 @@ extern uint8_t pomodoro_time;
 #define DEFAULT_TITLE_FONT u8g2_font_profont12_mf
 #define DEFAULT_TEXT_FONT u8g2_font_profont10_mf
 
+#define DEFAULT_SCROLL 5
+
 // PINS
 const uint8_t selectButton = 16, upButton = 17, downButton = 18;

@@ -27,10 +27,10 @@ void PopUp::initWindow()
     u8g2_SetDrawColor(display, 1);
     u8g2_SetBitmapMode(display, 0);
 
-    u8g2_SetClipWindow(display, x0, y0, x1, y1);
-    clearWindow(x0, y0, x1, y1);
-
+    clearWindow(x0, y0, x1 - 1, y1);
     u8g2_DrawFrame(display, x0, y0, width, height);
+
+    u8g2_SetClipWindow(display, x0, y0 + 1, x1, y1);
 }
 
 /* CONSTRUCTORS */
@@ -58,7 +58,7 @@ PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, 
 }
 
 /* PUBLIC FUNCTIONS */
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(void), bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
 {
     initWindow();
 
@@ -70,7 +70,7 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
-    content();
+    content(scroll_line);
 
     u8g2_SetMaxClipWindow(display); // end of function
 }
@@ -92,7 +92,7 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetMaxClipWindow(display); // end of function
 }
 
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*), bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*, uint8_t), bool title_is_centered)
 {
     initWindow();
 
@@ -104,7 +104,7 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
-    content(message);
+    content(message, scroll_line);
 
     u8g2_SetMaxClipWindow(display); // end of function
 }
