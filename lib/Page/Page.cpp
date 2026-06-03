@@ -30,6 +30,16 @@ void Page::displayPageTitle(uint8_t pageWidth, uint8_t pageHeight, bool centered
     u8g2_DrawStr(display, x, y, title);
 }
 
+void Page::activateScroll(bool turn_on)
+{
+    scroll_isActive = turn_on;
+}
+
+bool Page::scrollIsActive()
+{
+    return scroll_isActive;
+}
+
 void Page::setTitle(const char *title)
 {
     this->title = title;

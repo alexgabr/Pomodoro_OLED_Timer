@@ -58,7 +58,7 @@ PopUp::PopUp(u8g2_t *display, uint8_t width, uint8_t height, uint8_t nrButtons, 
 }
 
 /* PUBLIC FUNCTIONS */
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t), bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(uint8_t, uint8_t&), bool title_is_centered)
 {
     initWindow();
 
@@ -70,7 +70,14 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
-    content(scroll_line);
+    uint8_t curr_y;
+    content(scroll_line, curr_y);
+
+    if(curr_y >= (53 - 3)) { //default y of the buttons
+        activateScroll(true);
+    }
+    else
+        activateScroll(false);
 
     u8g2_SetMaxClipWindow(display); // end of function
 }
@@ -92,7 +99,7 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     u8g2_SetMaxClipWindow(display); // end of function
 }
 
-void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*, uint8_t), bool title_is_centered)
+void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*content)(const char*, uint8_t, uint8_t&), bool title_is_centered)
 {
     initWindow();
 
@@ -104,7 +111,14 @@ void PopUp::draw(const uint8_t *title_font, const uint8_t *content_font, void (*
     for(uint8_t i = 0; i < nrButtons; i++)
         button[i].bttn.init(button[i].x, button[i].y, button[i].bttn_name, i == select % nrButtons);
     
-    content(message, scroll_line);
+    uint8_t curr_y;
+    content(message, scroll_line, curr_y);
+
+    if(curr_y >= (53 - 2)) { //default y of the buttons
+        activateScroll(true);
+    }
+    else
+        activateScroll(false);
 
     u8g2_SetMaxClipWindow(display); // end of function
 }

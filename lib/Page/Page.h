@@ -7,6 +7,8 @@
 
 class Page
 {
+    private:
+        bool scroll_isActive = false;
     protected:
         const char *title;
         u8g2_t *display;
@@ -20,6 +22,9 @@ class Page
 
         void setTitle(const char *title); // Set page title
         const char *getTitle(); // Get page title
+
+        void activateScroll(bool turn_on);
+        bool scrollIsActive();
 
         void scrollUp();
         void scrollDown();

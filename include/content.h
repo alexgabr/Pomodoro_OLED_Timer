@@ -5,5 +5,5 @@
 
 
 void content_changePomodoroDuration(uint8_t nr);
-void content_alert(const char *message, uint8_t scroll);
-void content_infoDevice(uint8_t scroll);
+void content_alert(const char *message, uint8_t scroll, uint8_t &y);
+void content_infoDevice(uint8_t scroll, uint8_t &y);

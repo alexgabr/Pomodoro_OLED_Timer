@@ -19,7 +19,7 @@ void content_changePomodoroDuration(uint8_t nr) {
     u8g2.print("min");
 }
 
-void content_alert(const char *message, uint8_t scroll) {
+void content_alert(const char *message, uint8_t scroll, uint8_t &y) {
     uint8_t x_text = (128 - DEFAULT_POPUP_WIDTH) / 2 + 8; // beginning of the line
     uint8_t y_text = (64 - DEFAULT_POPUP_HEIGHT) / 2 + 20 - scroll; // first line
     uint8_t max_width = DEFAULT_POPUP_WIDTH - 16; // max width for each line
@@ -66,9 +66,11 @@ void content_alert(const char *message, uint8_t scroll) {
             break;
         }  
     }
+
+    y = y_text;
 }
 
-void content_infoDevice(uint8_t scroll) {
+void content_infoDevice(uint8_t scroll, uint8_t &y) {
     uint8_t x_text = (128 - DEFAULT_POPUP_WIDTH) / 2 + 8; // beginning of the line
     uint8_t y_text = (64 - DEFAULT_POPUP_HEIGHT) / 2 + 20 - scroll; // first line
 
@@ -106,4 +108,6 @@ void content_infoDevice(uint8_t scroll) {
 
     u8g2.print(':');
     u8g2.print(u8x8_u8toa(sec, 2));
+
+    y = y_text;
 }
