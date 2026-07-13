@@ -253,7 +253,7 @@ void Gui::render()
             
     } while(display.nextPage());
 
-    if (millis() - lastActivity >= INACTIVITY && !isPopUpActive())
+    if (millis() - lastActivity >= INACTIVITY)
         display.setPowerSave(true);
     else
         display.setPowerSave(false);

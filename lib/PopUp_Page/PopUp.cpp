@@ -24,7 +24,7 @@ void PopUp::initWindow()
     uint8_t x0 = (u8g2_GetDisplayWidth(display) - width) / 2, y0 = (u8g2_GetDisplayHeight(display) - height) / 2;
     uint8_t x1 = (u8g2_GetDisplayWidth(display) + width) / 2, y1 = (u8g2_GetDisplayHeight(display) + height) / 2;
 
-    u8g2_SetDrawColor(display, 1);
+    //u8g2_SetDrawColor(display, 1);
     u8g2_SetBitmapMode(display, 0);
 
     clearWindow(x0, y0, x1 - 1, y1);
